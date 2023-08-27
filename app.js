@@ -65,6 +65,16 @@ app.post("/remind", (req, res) => {
   }, time * 1000);
   res.json({ ack: `you will get email in ${time}` });
 });
+app.post("/vid", (req, res) => {
+  const { vid } = req.files;
+  const ftype = ["mp4"];
+  if (ftype.includes(vid.name.split(".")[vid.name.split(".").length - 1])) {
+    vid.mv(__dirname + "/uploads/" + vid.name);
+    res.json({ upload: 1 });
+  } else {
+    res.json({ upload: 0 });
+  }
+});
 app.listen(5000, () => {
   console.log("runnin");
 });
